@@ -56,13 +56,14 @@ $(function() {
 
 
         beforeEach((done)=>{
-            loadFeed.call(this, 0, function () {
+            loadFeed(0, function () {
                 done();
             });
         });
 
         it('(1) must have entry', (done)=>{
-            expect($('.feed').has($('.entry'))).toBeTruthy(); // check if the ',entry' section is added after feedLoad
+            expect($('.feed .entry')).toBeDefined(); // check if the ',entry' section is added after feedLoad
+            expect($('.feed .entery').length).toBeGreeterThan(0);
             done();
         });
     });
@@ -75,7 +76,7 @@ $(function() {
             title = $('.header-title');
 
         beforeAll((done) => {
-            loadFeed.call(this, 0, function () {
+            loadFeed( 0, function () {
                 done();
             });
         });
