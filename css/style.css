@@ -1,6 +1,6 @@
 *,
 *:after,
-*:before: {
+*:before {
     box-sizing: inherit;
 }
 
@@ -13,6 +13,7 @@ body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     margin: 0;
+    background-color: #eee;
 }
 
 a {
@@ -20,9 +21,6 @@ a {
     color: #111;
 }
 
-a:hover h2 {
-    text-decoration: underline;
-}
 
 h1 {
     display: inline-block;
@@ -36,7 +34,7 @@ h2 {
 }
 
 .header {
-    background: #4caf50;
+    background: linear-gradient(#b64289 50%,#a22873 86%);
     color: #fff;
     position: fixed;
     top: 0;
@@ -51,9 +49,9 @@ h2 {
 
 .slide-menu {
     position: absolute;
-    top: 3.5em;
+    top: 3.4em;
     padding: 1em;
-    background: #4caf50;
+    background: #b64289;
     height: 100%;
     width: 10em;
     transform: translate3d(0, 0, 0);
@@ -73,7 +71,11 @@ h2 {
 .slide-menu li a {
     color: #fff;
     display: block;
-    padding: 0.5em 0;
+    padding: 0.7em 0;
+}
+
+.slide-menu li a:hover {
+    font-weight: bold
 }
 
 .menu-hidden .slide-menu {
@@ -86,7 +88,14 @@ h2 {
 }
 
 .entry {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 2px solid #efecec;
     padding: 1em;
-    margin: 0.5em 0;
+    margin: 0.5em;
+    background-color: #fff;
+    color: #555;
+}
+
+.entry:hover {
+    border-bottom: 2px solid  #b64289;
+
 }

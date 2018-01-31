@@ -26,12 +26,8 @@ $(function() {
     describe('The menu', function() {
 
         let selector = $('body'),
-            // menuIcon = $('.menu-icon-link'),
+             menuIcon = $('.menu-icon-link'),
             showClass = 'menu-hidden';
-
-        function mockClickEvent() {
-            selector.toggleClass(showClass);
-        }
 
         it('(1) menu element is hidden', function () {
             expect(selector.hasClass(showClass)).toBeTruthy();
@@ -41,19 +37,18 @@ $(function() {
         //TODO add event spy by using jasmine-jquery but it does not work in first try
 
         it('(2) menu changes visibility when clicked', function () {
-            mockClickEvent();
-            // let spyEvent = spyOnEvent(menuIcon,'click');
-             expect(selector.hasClass(showClass)).toBeFalsy();
-            // expect(spyEvent).toHaveBeenTriggered();
-            mockClickEvent();
-            expect(selector.hasClass(showClass)).toBeTruthy();
+            menuIcon.trigger('click');
+            expect(selector.hasClass(showClass)).toBeFalsy();
+            menuIcon.trigger('click'); // make sure the menu is not still opened
+
 
         });
 
     });
+
     // TODO handle error callbacks
     describe('Initial Entries', function () {
-
+        let feedEntry = '';
 
         beforeEach((done)=>{
             loadFeed(0, function () {
@@ -61,9 +56,9 @@ $(function() {
             });
         });
 
-        it('(1) must have entry', (done)=>{
-            expect($('.feed .entry')).toBeDefined(); // check if the ',entry' section is added after feedLoad
-            expect($('.feed .entery').length).toBeGreeterThan(0);
+        it('(1) Feed must have entry', (done)=>{
+            feedEntry = $('.feed .entry');
+            expect(Array.from(feedEntry).length).toBeGreaterThan(0); // check if it has more than entry
             done();
         });
     });
@@ -72,19 +67,28 @@ $(function() {
         
 
         let container = $('.feed'),
-            containerContent = container.html(),
+            containerContent = '',
+            newContainerContent = '',
             title = $('.header-title');
 
-        beforeAll((done) => {
+        beforeEach((done) => {
             loadFeed( 0, function () {
                 done();
+
+                loadFeed( 0, function () {
+                    done();
+                });
+
             });
         });
 
         it('(1) should have a content', (done) => {
-
-            expect(title.html()).not.toMatch(/feed/gi); // The title changes in tern of the feed name
-            expect(containerContent).not.toEqual(container.html()); // make sure the content has been changed
+            containerContent = container.html();
+            expect(title.html()).not.toMatch(/feeds/gi); // The title changes in tern of the feed name
+            //expect(containerContent).not.toEqual(container.html()); // make sure the content has been changed
+            done();
+            newContainerContent = container.html();
+            expect(containerContent).not.toEqual(newContainerContent);
             done();
         });
 
