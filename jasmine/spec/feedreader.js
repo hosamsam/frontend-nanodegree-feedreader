@@ -40,7 +40,7 @@ $(function() {
             menuIcon.trigger('click');
             expect(selector.hasClass(showClass)).toBeFalsy();
             menuIcon.trigger('click'); // make sure the menu is not still opened
-
+            expect(selector.hasClass(showClass)).toBeTruthy();
 
         });
 
@@ -50,16 +50,11 @@ $(function() {
     describe('Initial Entries', function () {
         let feedEntry = '';
 
-        beforeEach((done)=>{
-            loadFeed(0, function () {
-                done();
-            });
-        });
+        beforeEach(done=>loadFeed(0,done));
 
-        it('(1) Feed must have entry', (done)=>{
+        it('(1) Feed must have entry', ()=>{
             feedEntry = $('.feed .entry');
-            expect(Array.from(feedEntry).length).toBeGreaterThan(0); // check if it has more than entry
-            done();
+            expect(feedEntry.length).toBeGreaterThan(0); // check if it has more than entry
         });
     });
 
@@ -72,22 +67,18 @@ $(function() {
             title = $('.header-title');
 
         beforeEach((done) => {
-            loadFeed( 0, function () {
-                done();
+            loadFeed(0, () => {
+                containerContent = container.html();
 
-                loadFeed( 0, function () {
+                loadFeed(1, () => {
+                    newContainerContent = container.html();
                     done();
                 });
-
+                
             });
         });
-
-        it('(1) should have a content', (done) => {
-            containerContent = container.html();
-            expect(title.html()).not.toMatch(/feeds/gi); // The title changes in tern of the feed name
-            //expect(containerContent).not.toEqual(container.html()); // make sure the content has been changed
-            done();
-            newContainerContent = container.html();
+        
+        it('(1) should have a different content', (done) => {
             expect(containerContent).not.toEqual(newContainerContent);
             done();
         });
